@@ -171,3 +171,83 @@ void SudokuPuzzle::findValidNumbersForTile(int row, int col, int* values, int &n
         }
     }
 }
+
+bool SudokuPuzzle::puzzleIsSolved(){
+    bool* found = new bool[width];
+    for(int i = 0; i < width; i++){
+        found[i] = false;
+    }
+
+    int numValues = 0;
+    int* values = new int[width];
+    for(int i = 0; i < width; i++){
+        values[i] = 0;
+    }
+
+    for(int i = 0; i < width; i++){
+        for(int j = 0; j < width; j++){
+            if(puzzle[i][j] == 0){
+                return false;
+            }
+        }
+    }
+
+    // check rows
+    for(int i = 0; i < width; i++){
+        findValuesInRow(i, values, numValues);
+
+        for(int j = 0; j < numValues; j++){
+            if(found[values[j] - 1] == true){
+                return false;
+            }
+            else{
+                found[values[j] - 1] = true;
+            }
+        }
+
+        // reset found array
+        for(int i = 0; i < width; i++){
+            found[i] = false;
+        }
+    }
+
+    // check rows
+    for(int i = 0; i < width; i++){
+        findValuesInCol(i, values, numValues);
+
+        for(int j = 0; j < numValues; j++){
+            if(found[values[j] - 1] == true){
+                return false;
+            }
+            else{
+                found[values[j] - 1] = true;
+            }
+        }
+
+        // reset found array
+        for(int i = 0; i < width; i++){
+            found[i] = false;
+        }
+    }
+
+    // check boxes
+    for(int i = 0; i < width; i++){
+        findValuesInBox((i * sqrtOfWidth) / width, (i * sqrtOfWidth) % width, values, numValues);
+
+        for(int j = 0; j < numValues; j++){
+            if(found[values[j] - 1] == true){
+                return false;
+            }
+            else{
+                found[values[j] - 1] = true;
+            }
+        }
+
+        // reset found array
+        for(int i = 0; i < width; i++){
+            found[i] = false;
+        }
+    }
+
+    return true;
+}

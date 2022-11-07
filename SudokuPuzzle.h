@@ -15,6 +15,7 @@ class SudokuPuzzle{
         void findValuesInCol(int col, int* values, int &numValues);
         void findValuesInBox(int boxX, int boxY, int* values, int &numValues);
         void findValidNumbersForTile(int row, int col, int* values, int &numValues);
+        bool puzzleIsSolved();
 
 };
 
