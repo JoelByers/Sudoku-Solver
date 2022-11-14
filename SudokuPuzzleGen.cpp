@@ -1,21 +1,26 @@
 #include <iostream>
 #include <cmath>
 #include <iomanip>
+#include <time.h>
 
 using namespace std;
 
 int main(int argc, char** argv){
 
     int width = 0;
+    int fill = 0;
 
-    if(argc <= 1){
-        cerr << "Size arg not given" << endl;
+    if(argc <= 2){
+        cerr << "Not enough arguments. Usage: <size> <%fill>" << endl;
+        return 1;
     }
     else{
         width = atoi(argv[1]);
+        fill = atoi(argv[2]);
     }
 
     int sqrtWidth = (int)sqrt(width);
+    srand(time(NULL));
     
     // find width to print
     int printWidth = 0;
@@ -26,9 +31,15 @@ int main(int argc, char** argv){
     }
 
     int offset = 0;
+    int number = 0;
     for(int i = 0; i < width; i++){
         for(int j = 0; j < width; j++){
-            cout << setw(printWidth) << (((j + (i * sqrtWidth) + offset) % width) + 1) << " ";
+            number = (((j + (i * sqrtWidth) + offset) % width) + 1);
+            if(rand() % 100 > fill){
+                number = 0;
+            }
+
+            cout << setw(printWidth) << number << " ";
         }
 
         cout << "\n";
