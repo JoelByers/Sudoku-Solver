@@ -5,6 +5,7 @@ class SudokuPuzzle{
     private:
         int** puzzle;
         bool*** possibleValues;
+        bool** givenValues;
         int width;
         int sqrtOfWidth;
     public:
@@ -19,7 +20,8 @@ class SudokuPuzzle{
         void removePossibleValue(int value, int row, int col);
         int getPossibleValue(int row, int col, int index);
         bool puzzleIsSolved();
-
+        void addGivenValue(int row, int col);
+        bool valueIsGiven(int row, int col);
 };
 
 #endif
