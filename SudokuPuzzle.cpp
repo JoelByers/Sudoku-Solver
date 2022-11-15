@@ -30,6 +30,15 @@ SudokuPuzzle::SudokuPuzzle(int width){
             }
         }
     }
+
+    // Initialize Puzzle
+    givenValues = new bool*[width];
+    for(int i = 0; i < width; i++){
+        givenValues[i] = new bool[width];
+        for(int j = 0; j < width; j++){
+            givenValues[i][j] = false;
+        }
+    }
 }
 
 void SudokuPuzzle::printPuzzle(){
@@ -290,4 +299,12 @@ bool SudokuPuzzle::puzzleIsSolved(){
     }
 
     return true;
+}
+
+void SudokuPuzzle::addGivenValue(int row, int col){
+    givenValues[row][col] = true;
+}
+
+bool SudokuPuzzle::valueIsGiven(int row, int col){
+    return givenValues[row][col];
 }

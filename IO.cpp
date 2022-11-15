@@ -24,6 +24,13 @@ SudokuPuzzle getPuzzleFromFile(string fileName){
         for(int j = width - 1; j >= 0; j--){
             int thisNum = puzzleData.back();
             puzzle.insert(thisNum, i, j);
+
+            // Mark values as given so they won't be
+            //changed when solving the puzzle
+            if(thisNum != 0){
+                puzzle.addGivenValue(i, j);
+            }
+
             puzzleData.pop_back();
         }
     }
