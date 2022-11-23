@@ -24,6 +24,8 @@ class SudokuPuzzle{
         bool puzzleIsSolved();
         void addGivenValue(int row, int col);
         bool valueIsGiven(int row, int col);
+        bool solveLoneRangers();
+        
 };
 
 #endif
