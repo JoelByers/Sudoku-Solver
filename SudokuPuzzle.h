@@ -19,6 +19,7 @@ class SudokuPuzzle{
         void addPossibleValue(int value, int row, int col);
         void removePossibleValue(int value, int row, int col);
         int getPossibleValue(int row, int col, int index);
+        int getNumPossibleValues(int row, int col);
         void findAllPossibleValues();
         bool puzzleIsSolved();
         void addGivenValue(int row, int col);
