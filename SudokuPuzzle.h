@@ -11,7 +11,7 @@ class SudokuPuzzle{
     public:
         SudokuPuzzle(int width);
         void printPuzzle();
-        void insert(int value, int row, int col);
+        void insertGivenValue(int value, int row, int col);
         void findValuesInRow(int row, int* values, int &numValues);
         void findValuesInCol(int col, int* values, int &numValues);
         void findValuesInBox(int boxX, int boxY, int* values, int &numValues);
@@ -19,6 +19,7 @@ class SudokuPuzzle{
         void addPossibleValue(int value, int row, int col);
         void removePossibleValue(int value, int row, int col);
         int getPossibleValue(int row, int col, int index);
+        void findAllPossibleValues();
         bool puzzleIsSolved();
         void addGivenValue(int row, int col);
         bool valueIsGiven(int row, int col);

@@ -77,8 +77,13 @@ void SudokuPuzzle::printPuzzle(){
     }
 }
 
-void SudokuPuzzle::insert(int value, int row, int col){
+// Insert value into the puzzle and mark this cell as given
+void SudokuPuzzle::insertGivenValue(int value, int row, int col){
     puzzle[row][col] = value;
+
+    if(value != 0){
+        addGivenValue(row, col);
+    }
 }
 
 // Get the all the values that are in a row and return them through 'values'.
@@ -307,4 +312,12 @@ void SudokuPuzzle::addGivenValue(int row, int col){
 
 bool SudokuPuzzle::valueIsGiven(int row, int col){
     return givenValues[row][col];
+}
+
+void SudokuPuzzle::findAllPossibleValues(){
+    for(int i = 0; i < width; i++){
+        for(int j = 0; j < width; j++){
+            findValidNumbersForTile(i, j);
+        }
+    }
 }
