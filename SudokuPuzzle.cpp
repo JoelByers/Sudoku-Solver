@@ -162,7 +162,7 @@ int SudokuPuzzle::getPossibleValue(int row, int col, int index){
     return -1;
 }
 
-void SudokuPuzzle::findValidNumbersForTile(int row, int col, int* values, int &numValues){
+void SudokuPuzzle::findValidNumbersForTile(int row, int col){
     int valInRow[width] = {0};
     int valInCol[width] = {0};
     int valInBox[width] = {0};
@@ -213,10 +213,9 @@ void SudokuPuzzle::findValidNumbersForTile(int row, int col, int* values, int &n
     }
 
     // write result to output array
-    numValues = 0;
+    int numValues = 0;
     for(int i = 0; i < width; i++){
         if(validNumbers[i] != 0){
-
             possibleValues[row][col][i] = true;
             numValues++;
         }
