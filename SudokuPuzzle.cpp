@@ -146,15 +146,15 @@ void SudokuPuzzle::removePossibleValue(int value, int row, int col){
 // Returns the value of the possible value at the index position
 // If there is no value in that position, -1 is returned
 int SudokuPuzzle::getPossibleValue(int row, int col, int index){
-    
+
     int valuesIndex = 0;
     for(int i = 0; i < SudokuPuzzle::width; i++){
         if(SudokuPuzzle::possibleValues[row][col][i] == true){
             if(valuesIndex == index){
                 return i + 1;
-        }
+            }
             else{
-            valuesIndex++;
+                valuesIndex++;
             }
         }
     }
@@ -330,4 +330,18 @@ void SudokuPuzzle::findAllPossibleValues(){
             findValidNumbersForTile(i, j);
         }
     }
+}
+
+bool SudokuPuzzle::solveLoneRangers(){
+    bool rangersFound = false;
+    for(int i = 0; i < width; i++){
+        for(int j = 0; j < width; j++){
+            if(puzzle[i][j] == 0 && getNumPossibleValues(i, j) == 1){
+                insertValue(i, j, getPossibleValue(i, j, 0));
+                rangersFound = true;
+            }
+        }
+    }
+
+    return rangersFound;
 }
