@@ -25,7 +25,7 @@ class SudokuPuzzle{
         void addGivenValue(int row, int col);
         bool valueIsGiven(int row, int col);
         bool solveLoneRangers();
-        
+        void insertValue(int row, int col, int value);
 };
 
 #endif
