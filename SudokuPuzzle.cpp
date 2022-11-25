@@ -350,3 +350,38 @@ bool SudokuPuzzle::solveLoneRangers(){
 
     return rangersFound;
 }
+
+bool SudokuPuzzle::solveSerial(int row, int col, int tile){
+
+    if(puzzleIsSolved()){
+        return true;
+    }
+
+    while(tile < (width * width) && puzzle[row][col] != 0){
+        tile++;
+        row = tile / width;
+        col = tile % width;
+    }
+
+    int numValues = 0;
+    if(!valueIsGiven(row, col) && puzzle[row][col] == 0 && (numValues = getNumPossibleValues(row, col)) > 0){
+        for(int i = 0; i < numValues; i++){
+            
+            // try next valid number
+            insertValue(row, col, getPossibleValue(row, col, i));
+
+            if(solveSerial(row, col, tile)){
+                return true;
+            }
+            else{
+                // reset value and reset possible values
+                insertValue(row, col, 0);
+            }
+        }
+
+        // No more values for this tile
+        return false;
+    }
+
+    return false;
+}
