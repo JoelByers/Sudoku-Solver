@@ -324,6 +324,11 @@ bool SudokuPuzzle::valueIsGiven(int row, int col){
     return givenValues[row][col];
 }
 
+void SudokuPuzzle::insertValue(int row, int col, int value){
+    puzzle[row][col] = value;
+    findAllPossibleValues();
+}
+
 void SudokuPuzzle::findAllPossibleValues(){
     for(int i = 0; i < width; i++){
         for(int j = 0; j < width; j++){
