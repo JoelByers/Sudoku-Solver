@@ -8,6 +8,7 @@ class SudokuPuzzle{
         bool** givenValues;
         int width;
         int sqrtOfWidth;
+        int widthDoubled;
     public:
         SudokuPuzzle(int width);
         void printPuzzle();
