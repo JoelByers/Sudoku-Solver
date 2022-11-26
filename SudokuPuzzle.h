@@ -27,6 +27,7 @@ class SudokuPuzzle{
         bool solveLoneRangers();
         bool solveSerial(int row, int col, int tile);
         void insertValue(int row, int col, int value);
+        void findPossibleValuesAroundTile(int row, int col);
 };
 
 #endif

@@ -326,7 +326,7 @@ bool SudokuPuzzle::valueIsGiven(int row, int col){
 
 void SudokuPuzzle::insertValue(int row, int col, int value){
     puzzle[row][col] = value;
-    findAllPossibleValues();
+    findPossibleValuesAroundTile(row, col);
 }
 
 void SudokuPuzzle::findAllPossibleValues(){
@@ -334,6 +334,23 @@ void SudokuPuzzle::findAllPossibleValues(){
         for(int j = 0; j < width; j++){
             findValidNumbersForTile(i, j);
         }
+    }
+}
+
+// Update the possible values of all tiles that would be
+// affected by a change to the value of the tile at row col
+void SudokuPuzzle::findPossibleValuesAroundTile(int row, int col){
+    for(int i = 0; i < width; i++){
+        //row
+        findValidNumbersForTile(i, col);
+
+        //column
+        findValidNumbersForTile(row, i);
+
+        //box
+        int boxRowStart = row - (row % sqrtOfWidth);
+        int boxColStart = col - (col % sqrtOfWidth);
+        findValidNumbersForTile(boxRowStart + (i / sqrtOfWidth), boxColStart + (i % sqrtOfWidth));
     }
 }
 
