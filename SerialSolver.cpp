@@ -17,6 +17,12 @@ int main(int argc, char** argv){
     SudokuPuzzle puzzle = getPuzzleFromFile(argv[1]);
 
     #ifndef TIME_OUTPUT_ONLY
+    cout << "   _______________" << endl;
+    cout << "  | Sudoku Solver |" << endl;
+    cout << "  |    Serial     |" << endl;
+    cout << "  '---------------'" << endl;
+    cout << "=======================" << endl;
+    cout << endl << "    [ Unsolved ]" << endl;
     puzzle.printPuzzle();
     #endif
 
@@ -25,6 +31,7 @@ int main(int argc, char** argv){
     time = omp_get_wtime() - time;
 
     #ifndef TIME_OUTPUT_ONLY
+    cout << endl << "    [  Solved  ]" << endl;;
     puzzle.printPuzzle();
     cout << "Duration: " << time << endl;
     #else
