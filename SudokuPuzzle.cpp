@@ -17,6 +17,19 @@ SudokuPuzzle::SudokuPuzzle(int width){
             puzzle[i][j] = 0;
         }
     }
+
+    // Initialize Possible numbers
+    possibleValues = new bool**[width];
+    for(int i = 0; i < width; i++){
+        possibleValues[i] = new bool*[width];
+        
+        for(int j = 0; j < width; j++){
+            possibleValues[i][j] = new bool[width];
+            for(int k = 0; k < width; k++){
+                possibleValues[i][j][k] = false;
+            }
+        }
+    }
 }
 
 void SudokuPuzzle::printPuzzle(){
@@ -106,6 +119,33 @@ void SudokuPuzzle::findValuesInBox(int row, int col, int* values, int &numValues
     }
 
     numValues = valueCount;
+}
+
+void SudokuPuzzle::addPossibleValue(int value, int row, int col){
+    possibleValues[row][col][value - 1] = true;
+}
+
+void SudokuPuzzle::removePossibleValue(int value, int row, int col){
+    possibleValues[row][col][value - 1] = false;
+}
+
+// Returns the value of the possible value at the index position
+// If there is no value in that position, -1 is returned
+int SudokuPuzzle::getPossibleValue(int row, int col, int index){
+    
+    int valuesIndex = 0;
+    for(int i = 0; i < SudokuPuzzle::width; i++){
+        if(SudokuPuzzle::possibleValues[row][col][i] == true){
+            if(valuesIndex == index){
+                return i + 1;
+        }
+            else{
+            valuesIndex++;
+            }
+        }
+    }
+
+    return -1;
 }
 
 void SudokuPuzzle::findValidNumbersForTile(int row, int col, int* values, int &numValues){
