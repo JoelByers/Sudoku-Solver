@@ -8,6 +8,7 @@ using namespace std;
 SudokuPuzzle::SudokuPuzzle(int width){
     SudokuPuzzle::width = width;
     SudokuPuzzle::sqrtOfWidth = (int)sqrt(width);
+    SudokuPuzzle::widthDoubled = width * width;
 
     // Initialize Puzzle
     puzzle = new int*[width];
