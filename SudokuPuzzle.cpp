@@ -353,20 +353,23 @@ bool SudokuPuzzle::solveLoneRangers(){
 
 bool SudokuPuzzle::solveSerial(int row, int col, int tile){
 
-    if(puzzleIsSolved()){
-        return true;
-    }
-
-    while(tile < (width * width) && puzzle[row][col] != 0){
+    // Move to next open space
+    while(tile < (widthDoubled) && puzzle[row][col] != 0){
         tile++;
         row = tile / width;
         col = tile % width;
     }
 
+    // if the last tile is reached, check
+    // to see if the puzzle is solvd
+    if(tile >= (widthDoubled) && puzzleIsSolved()){
+        return true;
+    }
+
     int numValues = 0;
     if(!valueIsGiven(row, col) && puzzle[row][col] == 0 && (numValues = getNumPossibleValues(row, col)) > 0){
         for(int i = 0; i < numValues; i++){
-            
+
             // try next valid number
             insertValue(row, col, getPossibleValue(row, col, i));
 
