@@ -5,6 +5,8 @@
 
 using namespace std;
 
+//#define TIME_OUTPUT_ONLY
+
 int main(int argc, char** argv){
 
     if(argc < 2){
@@ -13,11 +15,21 @@ int main(int argc, char** argv){
     }
 
     SudokuPuzzle puzzle = getPuzzleFromFile(argv[1]);
+
+    #ifndef TIME_OUTPUT_ONLY
     puzzle.printPuzzle();
+    #endif
+
     double time = omp_get_wtime();
     puzzle.solveSerial(0,0,0);
     time = omp_get_wtime() - time;
+
+    #ifndef TIME_OUTPUT_ONLY
     puzzle.printPuzzle();
     cout << "Duration: " << time << endl;
+    #else
+    cout << time;
+    #endif
+
     return 0;
 }
