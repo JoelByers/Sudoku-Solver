@@ -384,25 +384,21 @@ bool SudokuPuzzle::solveSerial(int row, int col, int tile){
         return true;
     }
 
-    int numValues = 0;
-    if(!valueIsGiven(row, col) && puzzle[row][col] == 0 && (numValues = getNumPossibleValues(row, col)) > 0){
-        for(int i = 0; i < numValues; i++){
+    int numValues = getNumPossibleValues(row, col);
+    for(int i = 0; i < numValues; i++){
 
-            // try next valid number
-            insertValue(row, col, getPossibleValue(row, col, i));
+        // try next valid number
+        insertValue(row, col, getPossibleValue(row, col, i));
 
-            if(solveSerial(row, col, tile)){
-                return true;
-            }
-            else{
-                // reset value and reset possible values
-                insertValue(row, col, 0);
-            }
+        if(solveSerial(row, col, tile)){
+            return true;
         }
-
-        // No more values for this tile
-        return false;
+        else{
+            // reset value and reset possible values
+            insertValue(row, col, 0);
+        }
     }
 
+    // No more values for this tile
     return false;
 }
