@@ -42,6 +42,18 @@ SudokuPuzzle::SudokuPuzzle(int width){
     }
 }
 
+SudokuPuzzle SudokuPuzzle::copy(){
+    SudokuPuzzle newPuzzle(this->width);
+
+    for(int i = 0; i < this->width; i++){
+        for(int j = 0; j < this->width; j++){
+            newPuzzle.insertValue(i, j, this->puzzle[i][j]);
+        }
+    }
+
+    return newPuzzle;
+}
+
 void SudokuPuzzle::printPuzzle(){
     // find width to print
     int printWidth = 0;
