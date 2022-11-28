@@ -2,6 +2,7 @@
 #include <iostream>
 #include <iomanip>
 #include <cmath>
+#include <omp.h>
 
 using namespace std;
 
@@ -413,4 +414,39 @@ bool SudokuPuzzle::solveSerial(int row, int col, int tile){
 
     // No more values for this tile
     return false;
+}
+
+void SudokuPuzzle::solveParallel(int row, int col, int tile, double startTime){
+
+    // Move to next open space
+    while(tile < (widthDoubled) && puzzle[row][col] != 0){
+        tile++;
+        row = tile / width;
+        col = tile % width;
+    }
+
+    // if the last tile is reached, check
+    // to see if the puzzle is solvd
+    if(tile >= (widthDoubled) && puzzleIsSolved()){
+        printPuzzle();
+        cout << omp_get_wtime() - startTime << endl;
+        return;
+    }
+
+    int numValues = getNumPossibleValues(row, col);
+    SudokuPuzzle* branches = (SudokuPuzzle*)malloc(sizeof(SudokuPuzzle) * numValues);
+
+    for(int i = 0; i < numValues; i++){
+        branches[i] = this->copy();
+    }
+
+    for(int i = 0; i < numValues; i++){
+
+        // try next valid number
+        branches[i].insertValue(row, col, getPossibleValue(row, col, i));
+
+        #pragma omp task
+        branches[i].solveParallel(row, col, i, startTime);
+        
+    }
 }
