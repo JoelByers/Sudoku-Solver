@@ -445,8 +445,12 @@ void SudokuPuzzle::solveParallel(int row, int col, int tile, double startTime){
         // try next valid number
         branches[i].insertValue(row, col, getPossibleValue(row, col, i));
 
-        #pragma omp task
-        branches[i].solveParallel(row, col, i, startTime);
-        
+        #pragma omp parallel
+        #pragma omp single
+        #pragma omp taskgroup
+        {
+            #pragma omp task
+            branches[i].solveParallel(row, col, i, startTime);
+        }
     }
 }
