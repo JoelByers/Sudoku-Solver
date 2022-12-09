@@ -4,7 +4,11 @@
 #include <cmath>
 #include <omp.h>
 
+#define TIME_OUTPUT_ONLY
+
 using namespace std;
+
+bool SudokuPuzzle::solved = false;
 
 SudokuPuzzle::SudokuPuzzle(int width){
     SudokuPuzzle::width = width;
@@ -418,6 +422,15 @@ bool SudokuPuzzle::solveSerial(int row, int col, int tile){
 
 void SudokuPuzzle::solveParallel(int row, int col, int tile, double startTime){
 
+    bool puzzleSolved;
+
+    #pragma omp atomic read
+    puzzleSolved = SudokuPuzzle::solved;
+
+    if(solved == true){
+        return;
+    }
+
     // Move to next open space
     while(tile < (widthDoubled) && puzzle[row][col] != 0){
         tile++;
@@ -428,8 +441,14 @@ void SudokuPuzzle::solveParallel(int row, int col, int tile, double startTime){
     // if the last tile is reached, check
     // to see if the puzzle is solvd
     if(tile >= (widthDoubled) && puzzleIsSolved()){
+
+        #pragma omp atomic write
+        SudokuPuzzle::solved = true;
+
+        #ifndef TIME_OUTPUT_ONLY
         printPuzzle();
-        cout << omp_get_wtime() - startTime << endl;
+        #endif
+        cout << omp_get_wtime() - startTime;
         return;
     }
 
@@ -440,13 +459,22 @@ void SudokuPuzzle::solveParallel(int row, int col, int tile, double startTime){
         branches[i] = this->copy();
     }
 
-    for(int i = 0; i < numValues; i++){
+    #pragma omp parallel
+    #pragma omp single
+    #pragma omp taskgroup
+    {
+        for(int i = 0; i < numValues; i++){
 
-        // try next valid number
-        branches[i].insertValue(row, col, getPossibleValue(row, col, i));
+            // try next valid number
+            branches[i].insertValue(row, col, getPossibleValue(row, col, i));
 
-        #pragma omp task
-        branches[i].solveParallel(row, col, i, startTime);
-        
+            {
+                #pragma omp task
+                branches[i].solveParallel(row, col, i, startTime);
+            }
+        }
+
+        #pragma omp taskwait
     }
+
 }
