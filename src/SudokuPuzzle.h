@@ -9,6 +9,7 @@ class SudokuPuzzle{
         int width;
         int sqrtOfWidth;
         int widthDoubled;
+        static bool solved;
     public:
         SudokuPuzzle(int width);
         void printPuzzle();
