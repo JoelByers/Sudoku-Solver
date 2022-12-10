@@ -14,5 +14,5 @@ module load slurm
 module load gcc/11.3.0
 module list
 
-./Part1.sh
+#./Part1.sh
 ./Part2.sh
