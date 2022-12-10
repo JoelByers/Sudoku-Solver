@@ -5,7 +5,7 @@
 
 using namespace std;
 
-//#define TIME_OUTPUT_ONLY
+#define TIME_OUTPUT_ONLY
 
 int main(int argc, char** argv){
 

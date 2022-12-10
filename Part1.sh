@@ -5,11 +5,11 @@ OUTPUT_FOLDER="results"
 
 for i in {1..15}
 do
-    for size in 4 9 16
+    for size in 4 9
     do
         for fill in 30 40 50 
         do
-            OUTPUT_FILE="${OUTPUT_FOLDER}/Part1_${size}_1_${fill}.csv"
+            OUTPUT_FILE="${OUTPUT_FOLDER}/Part1b_${size}_1_${fill}.csv"
             echo Outputing to $OUTPUT_FILE
 
             if [ $i -eq 1 ]

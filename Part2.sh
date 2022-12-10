@@ -4,13 +4,13 @@ INPUT_FILE="puzzles/testPuzzle.txt"
 
 for i in {1..15}
 do
-    for size in 4 9 16
+    for size in 4 9
     do
         for fill in 30 40 50 
         do
-            for threads in 1 2 4 8 16 32
+            for threads in 2 4 8 16 32
             do
-                OUTPUT_FILE="Part2_${size}_${threads}_${fill}.csv"
+                OUTPUT_FILE="Part2b_${size}_${threads}_${fill}.csv"
                 echo Outputing to $OUTPUT_FILE
 
                 if [ $i -eq 1 ]
