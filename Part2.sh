@@ -7,7 +7,7 @@ for i in {1..15}
 do
     for size in 4 9
     do
-        for fill in 30 40 50 
+        for fill in 30 35 40 45 50 55 60 65 70 75 80 
         do
             for threads in 2 4 8 16 32
             do

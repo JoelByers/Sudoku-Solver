@@ -6,11 +6,11 @@ for i in {1..15}
 do
     for size in 25
     do
-        for threads in 32 16 8 4 2 1
+        for threads in 36 32 16 8 4 2 1
         do
 
-            OUTPUT_FILE="Part3_${size}_${threads}_30.csv"
-            echo Outputing to $OUTPUT_FILE
+            OUTPUT_FILE="Part3b_${size}_${threads}_30.csv"
+            echo Outputing to results/$OUTPUT_FILE
 
             if [ $i -eq 1 ]
             then

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name=pt4
+#SBATCH --job-name=pt4b
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=32
 #SBATCH --output=slurmOut/sudokuParallel-%j-%N.log
