@@ -3,13 +3,13 @@
 INPUT_FILE="puzzles/testPuzzle2.txt"
 OUTPUT_FOLDER="results"
 
-for i in {1..15}
+for i in {1..16}
 do
-    for size in 4 9
+    for size in 9
     do
         for fill in 30 35 40 45 50 55 60 65 70 75 80 
         do
-            for threads in 2 4 8 16 32
+            for threads in 32
             do
                 OUTPUT_FILE="${OUTPUT_FOLDER}/Part2b_${size}_${threads}_${fill}.csv"
                 echo Outputing to $OUTPUT_FILE

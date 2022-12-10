@@ -1,15 +1,15 @@
 #!/bin/bash
 
-INPUT_FILE="puzzles/testPuzzle.txt"
+INPUT_FILE="puzzles/testPuzzle7.txt"
 OUTPUT_FOLDER="results"
 
-for i in {1..15}
+for i in {1..100}
 do
     for size in 4 9
     do
         for fill in 4 21 
         do
-            OUTPUT_FILE="${OUTPUT_FOLDER}/Serial_Smallest_Fill_${size}_1_${fill}.csv"
+            OUTPUT_FILE="${OUTPUT_FOLDER}/Part1b_${size}_1_${fill}.csv"
             echo Outputing to $OUTPUT_FILE
 
             if [ $i -eq 1 ]
