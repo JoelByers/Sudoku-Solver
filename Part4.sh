@@ -1,6 +1,6 @@
 #!/bin/bash
 
-INPUT_FILE="puzzles/testPuzzle.txt"
+INPUT_FILE="puzzles/testPuzzle4.txt"
 
 for i in {1..15}
 do
@@ -9,7 +9,7 @@ do
         for threads in 36 32 16 8 4 2 1
         do
 
-            OUTPUT_FILE="Part3b_${size}_${threads}_30.csv"
+            OUTPUT_FILE="Part4b_${size}_${threads}_30.csv"
             echo Outputing to results/$OUTPUT_FILE
 
             if [ $i -eq 1 ]

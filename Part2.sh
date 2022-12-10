@@ -1,6 +1,6 @@
 #!/bin/bash
 
-INPUT_FILE="puzzles/testPuzzle.txt"
+INPUT_FILE="puzzles/testPuzzle2.txt"
 OUTPUT_FOLDER="results"
 
 for i in {1..15}
