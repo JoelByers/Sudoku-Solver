@@ -448,7 +448,7 @@ void SudokuPuzzle::solveParallel(int row, int col, int tile, double startTime){
         #ifndef TIME_OUTPUT_ONLY
         printPuzzle();
         #endif
-        cout << omp_get_wtime() - startTime << endl;
+        cout << omp_get_wtime() - startTime;
         return;
     }
 
