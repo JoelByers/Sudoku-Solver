@@ -1,15 +1,15 @@
 #!/bin/bash
 
-INPUT_FILE="puzzles/testPuzzle4.txt"
+INPUT_FILE="puzzles/testPuzzle4c.txt"
 
 for i in {1..15}
 do
-    for size in 25
+    for size in 16
     do
-        for threads in 36 32 16 8 4 2 1
+        for threads in 36
         do
 
-            OUTPUT_FILE="Part4b_${size}_${threads}_30.csv"
+            OUTPUT_FILE="Part4d_${size}_${threads}_30.csv"
             echo Outputing to results/$OUTPUT_FILE
 
             if [ $i -eq 1 ]
@@ -19,10 +19,9 @@ do
             fi
 
             # Generate a new puzzle for each run
-            rm $INPUT_FILE
-            ./gen.out $size 30 >> $INPUT_FILE
+            ./gen.out $size 57 > $INPUT_FILE
 
-            echo -n $size,$threads,30, >> $OUTPUT_FILE
+            echo -n $size,$threads,57, >> $OUTPUT_FILE
 
             # Set number of threads and run
             export OMP_NUM_THREADS=$threads

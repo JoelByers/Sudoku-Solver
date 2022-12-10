@@ -1,11 +1,11 @@
 #!/bin/bash
 
-#SBATCH --job-name=smallest
+#SBATCH --job-name=16x16
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=32
 #SBATCH --output=slurmOut/sudokuParallel-%j-%N.log
-#SBATCH --partition=quickq
-#SBATCH --time=10:00:00
+#SBATCH --partition=compute
+#SBATCH --time=48:00:00
 
 module purge
 module use /cm/shared/modulefiles_local
@@ -14,5 +14,4 @@ module load slurm
 module load gcc/11.3.0
 module list
 
-./Part1.sh
-#./Part2.sh
+./Part6_16x16.sh

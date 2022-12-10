@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name=pt4c
+#SBATCH --job-name=16x16
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=36
 #SBATCH --output=slurmOut/sudokuParallel-%j-%N.log
@@ -14,4 +14,9 @@ module load slurm
 module load gcc/11.3.0
 module list
 
-./Part4.sh
+echo 40
+./gen.out 16 40 > puzzles/testManual1
+
+export OMP_NUM_THREADS=36
+echo Number of Threads: $OMP_NUM_THREADS
+./sudokuParallel.out puzzles/16x16/testManual1.txt
