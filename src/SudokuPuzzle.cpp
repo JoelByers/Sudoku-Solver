@@ -4,7 +4,7 @@
 #include <cmath>
 #include <omp.h>
 
-#define TIME_OUTPUT_ONLY
+//#define TIME_OUTPUT_ONLY
 
 using namespace std;
 
@@ -13,7 +13,7 @@ bool SudokuPuzzle::solved = false;
 SudokuPuzzle::SudokuPuzzle(int width){
     SudokuPuzzle::width = width;
     SudokuPuzzle::sqrtOfWidth = (int)sqrt(width);
-    SudokuPuzzle::widthDoubled = width * width;
+    SudokuPuzzle::widthSquared = width * width;
 
     // Initialize Puzzle
     puzzle = new int*[width];
@@ -389,7 +389,7 @@ bool SudokuPuzzle::solveLoneRangers(){
 bool SudokuPuzzle::solveSerial(int row, int col, int tile){
 
     // Move to next open space
-    while(tile < (widthDoubled) && puzzle[row][col] != 0){
+    while(tile < (widthSquared) && puzzle[row][col] != 0){
         tile++;
         row = tile / width;
         col = tile % width;
@@ -397,7 +397,7 @@ bool SudokuPuzzle::solveSerial(int row, int col, int tile){
 
     // if the last tile is reached, check
     // to see if the puzzle is solvd
-    if(tile >= (widthDoubled) && puzzleIsSolved()){
+    if(tile >= (widthSquared) && puzzleIsSolved()){
         return true;
     }
 
@@ -421,7 +421,6 @@ bool SudokuPuzzle::solveSerial(int row, int col, int tile){
 }
 
 void SudokuPuzzle::solveParallel(int row, int col, int tile, double startTime){
-
     bool puzzleSolved;
 
     #pragma omp atomic read
@@ -432,7 +431,7 @@ void SudokuPuzzle::solveParallel(int row, int col, int tile, double startTime){
     }
 
     // Move to next open space
-    while(tile < (widthDoubled) && puzzle[row][col] != 0){
+    while(tile < (widthSquared) && puzzle[row][col] != 0){
         tile++;
         row = tile / width;
         col = tile % width;
@@ -440,7 +439,7 @@ void SudokuPuzzle::solveParallel(int row, int col, int tile, double startTime){
 
     // if the last tile is reached, check
     // to see if the puzzle is solvd
-    if(tile >= (widthDoubled) && puzzleIsSolved()){
+    if(tile >= (widthSquared) && puzzleIsSolved()){
 
         #pragma omp atomic write
         SudokuPuzzle::solved = true;
@@ -453,28 +452,34 @@ void SudokuPuzzle::solveParallel(int row, int col, int tile, double startTime){
     }
 
     int numValues = getNumPossibleValues(row, col);
-    SudokuPuzzle* branches = (SudokuPuzzle*)malloc(sizeof(SudokuPuzzle) * numValues);
 
-    for(int i = 0; i < numValues; i++){
-        branches[i] = this->copy();
+    if(numValues == 1){
+        insertValue(row, col, getPossibleValue(row, col, 0));
+        solveParallel(row, col, tile, startTime);
     }
+    else{
+        SudokuPuzzle* branches = (SudokuPuzzle*)malloc(sizeof(SudokuPuzzle) * numValues);
 
-    #pragma omp parallel
-    #pragma omp single
-    #pragma omp taskgroup
-    {
         for(int i = 0; i < numValues; i++){
-
-            // try next valid number
-            branches[i].insertValue(row, col, getPossibleValue(row, col, i));
-
-            {
-                #pragma omp task
-                branches[i].solveParallel(row, col, i, startTime);
-            }
+            branches[i] = this->copy();
         }
 
-        #pragma omp taskwait
-    }
+        #pragma omp parallel
+        #pragma omp single
+        #pragma omp taskgroup
+        {
+            for(int i = 0; i < numValues; i++){
 
+                // try next valid number
+                branches[i].insertValue(row, col, getPossibleValue(row, col, i));
+
+                {
+                    #pragma omp task
+                    branches[i].solveParallel(row, col, i, startTime);
+                }
+            }
+
+            #pragma omp taskwait
+        }
+    }
 }

@@ -8,7 +8,7 @@ class SudokuPuzzle{
         bool** givenValues;
         int width;
         int sqrtOfWidth;
-        int widthDoubled;
+        int widthSquared;
         static bool solved;
     public:
         SudokuPuzzle(int width);

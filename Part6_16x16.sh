@@ -6,11 +6,11 @@ OUTPUT_FOLDER="results"
 
 for size in 16
 do
-    for fill in 80 75 70 65 60 59 58 57 56 55 54 53 52 51 50
+    for fill in 80 75 70 65 60 65 55 50 45 40 35 30
     do
         for i in {1..15}
         do
-            OUTPUT_FILE="${OUTPUT_FOLDER}/16x16_${size}_36_${fill}.csv"
+            OUTPUT_FILE="${OUTPUT_FOLDER}/16x16_Serial_${size}_36_${fill}.csv"
             echo Outputing to $OUTPUT_FILE
 
             if [ $i -eq 1 ]
@@ -27,7 +27,7 @@ do
             echo -n $size,36,$fill, >> $OUTPUT_FILE
 
             # Set number of threads and run
-            ./sudokuParallel.out $INPUT_FILE >> $OUTPUT_FILE
+            ./sudokuSerial.out $INPUT_FILE >> $OUTPUT_FILE
             echo >> $OUTPUT_FILE
         done
     done
