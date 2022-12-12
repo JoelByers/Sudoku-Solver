@@ -4,7 +4,7 @@
 #include <cmath>
 #include <omp.h>
 
-//#define TIME_OUTPUT_ONLY
+#define TIME_OUTPUT_ONLY
 
 using namespace std;
 
@@ -453,11 +453,11 @@ void SudokuPuzzle::solveParallel(int row, int col, int tile, double startTime){
 
     int numValues = getNumPossibleValues(row, col);
 
-    if(numValues == 1){
-        insertValue(row, col, getPossibleValue(row, col, 0));
-        solveParallel(row, col, tile, startTime);
-    }
-    else{
+    // if(numValues == 1){
+    //     insertValue(row, col, getPossibleValue(row, col, 0));
+    //     solveParallel(row, col, tile, startTime);
+    // }
+    // else{
         SudokuPuzzle* branches = (SudokuPuzzle*)malloc(sizeof(SudokuPuzzle) * numValues);
 
         for(int i = 0; i < numValues; i++){
@@ -480,6 +480,6 @@ void SudokuPuzzle::solveParallel(int row, int col, int tile, double startTime){
             }
 
             #pragma omp taskwait
-        }
+        //}
     }
 }

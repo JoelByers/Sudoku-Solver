@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name=P3
+#SBATCH --job-name=P2
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=32
 #SBATCH --output=slurmOut/sudokuParallel-%j-%N.log
@@ -14,4 +14,4 @@ module load slurm
 module load gcc/11.3.0
 module list
 
-./Part3.sh
+./Part2.sh
